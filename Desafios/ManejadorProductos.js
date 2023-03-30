@@ -1,54 +1,67 @@
 class ProductManager {
-    #precioBaseGanancia = 0.15;
 
     constructor() {
-        this.producto = [];
+        this.productos = [];
     }
 
     getProducto = () => {
-        return this.producto;
+        return this.productos;
     }
 
     agregarProducto = 
-    (nombre, descripcion, precio, thumbnail, codigo, stock = 50
+    (nombre, descripcion, precio, thumbnail,stock, codigo
         ) =>  {
             const producto = {
             nombre,
             descripcion,
             precio,
             thumbnail,
+            stock,
             codigo,
-            stock: [],
     };
-        if (this.producto.lenght === 0) {
+        if (this.productos.length === 0) { //estaba mal escrito length
             producto.id = 1;
         }
         else {
-            producto.id = this.productos[this.producto.lenght - 1].id + 1;
-            this.producto.push(producto)
+            producto.id = this.productos[this.productos.length - 1].id + 1;//estaba escrito lenght en vez de lenght
         };
-    
-        this.producto.push(producto)
-    
-        agregarUsuario = (idProducto, idUsuario) => {
-            const productoIndex = this.producto
-            .findIndex(producto => producto.id === idUsuario);
-        }
-        if(productoIndex === -1) {
-            console.log("Producto no encontrado");
+
+        const codigoRegistrado = this.productos.findIndex(producto => producto.codigo === codigo)
+        if(codigoRegistrado != -1){
+            console.log("El codigo ya existe, ingrese uno nuevo")
             return;
+        };
+        if(!nombre || !descripcion || !precio || !thumbnail || !stock || !codigo ) {
+            console.log("Todos los campos son obligatorios")
+            return
         }
-        const usuarioRegistrado =
-        this.producto[productoIndex].stock.includes(idUsuario);
-        if(usuarioRegistrado) {
-            console.log("Usuario ya registrado");
-            return;
-        }
-        this.producto[productoIndex].stock.push(idUsuario);
-    };
+            this.productos.push(producto)  
+  };
+   
+  getProductById = (id) => {
+    const productoEncontrado = this.productos.findIndex(producto => producto.id === id)
+    if(productoEncontrado === -1){
+        console.log("Producto NOT FOUND")
+        return;
+    } 
+    console.log("Producto encontrado", this.productos [productoEncontrado]);
+  }
 };
 
+// prueba
 const manejadorProductos = new ProductManager();
-manejadorProductos.agregarProducto("Buzo negro","buzo negro de altisima calidad", 1500);
-manejadorProductos.agregarUsuario(1,1);
+
+// Agrego producto
+manejadorProductos.agregarProducto("Buzo negro","buzo negro", 1500, "/imagen", 50, 1);
+manejadorProductos.agregarProducto ("Remera", "remera blanca", 500, "/imagen", 30, 2);
 console.log(manejadorProductos.getProducto());
+
+// producto repetido//
+manejadorProductos.agregarProducto("Buzo negro","buzo negro de altisima calidad", 1500, "/imagen", 50, 1);
+
+// producto con campo vacio //
+manejadorProductos.agregarProducto("Buzo negro", 1500, "/imagen", 50, 1);
+
+// uso el getProductById //
+manejadorProductos.getProductById(1);
+manejadorProductos.getProductById(25); //NOT FOUND//
