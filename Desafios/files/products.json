@@ -1,0 +1,20 @@
+[
+	{
+		"nombre": "buzo",
+		"descripcion": "buzo negro",
+		"precio": 12,
+		"thumbnail": "/imagen",
+		"stock": 5,
+		"codigo": 1,
+		"id": 3
+	},
+	{
+		"nombre": "remera",
+		"descripcion": "remera blanca",
+		"precio": 5,
+		"thumbnail": "/imagen",
+		"stock": 4,
+		"codigo": 2,
+		"id": 4
+	}
+]
